@@ -2,73 +2,1825 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bem-estar App</title>
-  <link rel="stylesheet" href="estilo.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bem-estar App — Microlearning & Saúde Gamificada</title>
+  <meta name="description" content="Bem-estar App: 10 módulos educativos, 200 lições ilustradas e quizzes gamificados sobre saúde, sono, nutrição, meditação e esportes. 100% offline e bilíngue (PT/EN)." />
+  <link rel="icon" type="image/jpeg" href="icon.jpg" />
+
+  <!-- Fontes do Google alinhadas à tipografia real do App -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --teal-dark: #093E50;
+      --teal-primary: #0E5A73;
+      --teal-mid: #167290;
+      --slate-bg: #5A7682;
+      --green-primary: #2E7D32;
+      --green-light: #E8F5E9;
+      --gold-accent: #D9A74A;
+      --ivory-bg: #FAF8F2;
+      --ivory-card: #FFFFFF;
+      --ivory-soft: #F2EFE6;
+      --text-main: #18262C;
+      --text-muted: #52646D;
+      --border-soft: rgba(14, 90, 115, 0.14);
+      --shadow-sm: 0 4px 14px rgba(9, 62, 80, 0.06);
+      --shadow-md: 0 14px 34px rgba(9, 62, 80, 0.10);
+      --shadow-lg: 0 28px 60px rgba(9, 62, 80, 0.18);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--ivory-bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .serif-title {
+      font-family: 'Lora', Georgia, serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* ================= NAVBAR ================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 248, 242, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--teal-dark);
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(14, 90, 115, 0.18);
+      border: 1px solid rgba(14, 90, 115, 0.15);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.12rem;
+      line-height: 1.1;
+      color: var(--teal-dark);
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--green-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-toggle {
+      background: var(--ivory-card);
+      border: 1px solid var(--border-soft);
+      color: var(--teal-primary);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 8px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .lang-toggle:hover {
+      background: var(--ivory-soft);
+      border-color: var(--teal-primary);
+    }
+
+    .btn-nav-download {
+      background: var(--teal-primary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 9px 18px;
+      border-radius: 999px;
+      transition: all 0.25s;
+      box-shadow: 0 6px 16px rgba(14, 90, 115, 0.24);
+    }
+
+    .btn-nav-download:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      position: relative;
+      padding: 56px 24px 72px;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(217, 167, 74, 0.14), transparent 38%),
+        radial-gradient(circle at 88% 25%, rgba(14, 90, 115, 0.12), transparent 42%),
+        radial-gradient(circle at 75% 85%, rgba(46, 125, 50, 0.10), transparent 40%);
+    }
+
+    .hero-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ivory-card);
+      border: 1px solid var(--border-soft);
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--teal-primary);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 22px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-primary);
+      box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.18);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.35rem);
+      line-height: 1.14;
+      color: var(--teal-dark);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--green-primary);
+      position: relative;
+    }
+
+    .hero-desc {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 30px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .btn-primary-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--teal-primary), var(--teal-dark));
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 14px 30px rgba(14, 90, 115, 0.28);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px rgba(14, 90, 115, 0.36);
+    }
+
+    .btn-primary-hero small {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.86;
+    }
+
+    .btn-secondary-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ivory-card);
+      color: var(--teal-dark);
+      border: 1.5px solid var(--border-soft);
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 0.96rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary-hero:hover {
+      border-color: var(--teal-primary);
+      background: var(--ivory-soft);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-family: 'Lora', serif;
+      font-size: 1.55rem;
+      color: var(--teal-dark);
+      line-height: 1.1;
+    }
+
+    .stat-box span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ================= INTERACTIVE PHONE MOCKUP ================= */
+    .phone-showcase {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .phone-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--ivory-card);
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .phone-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .phone-tab-btn.active {
+      background: var(--teal-primary);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(14, 90, 115, 0.25);
+    }
+
+    .phone-frame {
+      width: 332px;
+      height: 650px;
+      background: #141E22;
+      border-radius: 44px;
+      padding: 12px;
+      box-shadow: var(--shadow-lg), inset 0 0 0 2px #2F4047;
+      position: relative;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 104px;
+      height: 22px;
+      background: #0F171A;
+      border-radius: 999px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+
+    .phone-notch::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1E3A46;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: var(--ivory-bg);
+      border-radius: 34px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .phone-statusbar {
+      height: 36px;
+      padding: 10px 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      background: var(--ivory-bg);
+      flex-shrink: 0;
+    }
+
+    .screen-view {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .screen-view.active {
+      display: flex;
+    }
+
+    /* Screen 1: Real App Home Replica */
+    .app-top-bar {
+      background: var(--ivory-bg);
+      padding: 6px 16px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-top-bar img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+    }
+
+    .app-home-body {
+      flex: 1;
+      background: var(--slate-bg);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .app-search-box {
+      background: #fff;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    }
+
+    .app-cat-pill {
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--slate-bg);
+      text-align: center;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 5px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .app-module-circles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-top: 4px;
+    }
+
+    .app-circle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .app-circle-item:hover {
+      transform: scale(1.04);
+    }
+
+    .app-circle-avatar {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: var(--ivory-bg);
+      border: 4px solid var(--green-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+      margin-bottom: 6px;
+    }
+
+    .app-circle-label {
+      color: #fff;
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* Screen 2: Golden Lesson Card Replica */
+    .lesson-screen {
+      padding: 12px 16px 18px;
+      justify-content: space-between;
+      background: var(--ivory-bg);
+    }
+
+    .lesson-dots {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      margin: 6px 0 12px;
+    }
+
+    .lesson-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #CBD5D9;
+      transition: all 0.2s;
+    }
+
+    .lesson-dot.active {
+      background: var(--teal-primary);
+      width: 18px;
+      border-radius: 999px;
+    }
+
+    .lesson-card-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-soft);
+      text-align: center;
+    }
+
+    .lesson-art {
+      height: 155px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #16324A, #275373);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 3.2rem;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .lesson-art span.tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.16);
+      font-size: 0.66rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+
+    .lesson-card-box h4 {
+      font-family: 'Lora', serif;
+      color: var(--teal-primary);
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .lesson-card-box p {
+      font-size: 0.82rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .lesson-nav-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-lesson {
+      flex: 1;
+      border: none;
+      padding: 11px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-lesson.prev {
+      background: var(--ivory-soft);
+      color: var(--teal-dark);
+    }
+
+    .btn-lesson.next {
+      background: var(--green-primary);
+      color: #fff;
+    }
+
+    /* Screen 3: Interactive Quiz Replica */
+    .quiz-screen {
+      padding: 14px 16px 18px;
+      background: var(--ivory-bg);
+      justify-content: space-between;
+    }
+
+    .quiz-progress-bar {
+      height: 6px;
+      background: #DCE4E7;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      width: 60%;
+      background: var(--green-primary);
+    }
+
+    .quiz-q-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--teal-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .quiz-question {
+      font-family: 'Lora', serif;
+      font-size: 1.02rem;
+      color: var(--teal-dark);
+      margin-bottom: 14px;
+      line-height: 1.35;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .quiz-opt {
+      background: #fff;
+      border: 1.5px solid #DCE4E7;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-main);
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--teal-primary);
+    }
+
+    .quiz-opt.correct {
+      background: var(--green-light);
+      border-color: var(--green-primary);
+      color: var(--green-primary);
+    }
+
+    .quiz-opt.wrong {
+      background: #FFEBEE;
+      border-color: #D32F2F;
+      color: #C62828;
+    }
+
+    .quiz-feedback {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      min-height: 22px;
+      margin-top: 8px;
+    }
+
+    /* Screen 4: Splash & Video Demo */
+    .media-screen {
+      padding: 12px;
+      background: #FAF8F2;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .media-screen img, .media-screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 22px;
+    }
+
+    /* ================= SECTIONS COMMON ================= */
+    .section {
+      padding: 84px 24px;
+    }
+
+    .section-alt {
+      background: var(--ivory-soft);
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 48px;
+    }
+
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green-primary);
+      background: var(--green-light);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.85rem, 3.2vw, 2.55rem);
+      color: var(--teal-dark);
+      margin-bottom: 14px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+    }
+
+    /* ================= METHODOLOGY CARDS ================= */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .method-card {
+      background: var(--ivory-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .method-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .method-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(14, 90, 115, 0.12), rgba(46, 125, 50, 0.14));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    .method-card h3 {
+      font-size: 1.25rem;
+      color: var(--teal-dark);
+      margin-bottom: 10px;
+    }
+
+    .method-card p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+    }
+
+    /* ================= 10 MODULES EXPLORER ================= */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      border: 1px solid var(--border-soft);
+      background: var(--ivory-card);
+      color: var(--text-muted);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--teal-primary);
+      color: #fff;
+      border-color: var(--teal-primary);
+    }
+
+    .module-search {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: var(--ivory-card);
+      font-family: inherit;
+      font-size: 0.9rem;
+      min-width: 260px;
+      outline: none;
+    }
+
+    .module-search:focus {
+      border-color: var(--teal-primary);
+      box-shadow: 0 0 0 3px rgba(14, 90, 115, 0.12);
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    .module-card {
+      background: var(--ivory-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s;
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--teal-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .module-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .module-emoji {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--ivory-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .module-cat-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--teal-primary);
+      background: rgba(14, 90, 115, 0.08);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .module-card h3 {
+      font-size: 1.18rem;
+      color: var(--teal-dark);
+      margin-bottom: 8px;
+    }
+
+    .module-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .module-meta {
+      padding-top: 12px;
+      border-top: 1px solid var(--border-soft);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-primary);
+    }
+
+    /* ================= TECH SPECS & INSTALL ================= */
+    .specs-install-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .panel-box {
+      background: var(--ivory-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel-box h3 {
+      font-size: 1.45rem;
+      color: var(--teal-dark);
+      margin-bottom: 18px;
+    }
+
+    .spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-soft);
+      font-size: 0.93rem;
+    }
+
+    .spec-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-list span {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .spec-list strong {
+      color: var(--teal-dark);
+      font-weight: 700;
+    }
+
+    .install-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--teal-primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-item h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.98rem;
+      color: var(--teal-dark);
+      margin-bottom: 3px;
+    }
+
+    .step-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* ================= CTA BANNER ================= */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-primary) 55%, #1F6B57 100%);
+      border-radius: 28px;
+      padding: 52px 40px;
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta-banner-text {
+      max-width: 620px;
+    }
+
+    .cta-banner-text h2 {
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .cta-banner-text p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .btn-cta-white {
+      background: #fff;
+      color: var(--teal-dark);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 18px 30px;
+      border-radius: 16px;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+      transition: transform 0.2s;
+    }
+
+    .btn-cta-white:hover {
+      transform: translateY(-3px);
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background: var(--teal-dark);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 44px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+    }
+
+    .footer-credits {
+      font-size: 0.88rem;
+    }
+
+    .footer-credits strong {
+      color: #fff;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-cta-group {
+        justify-content: center;
+      }
+
+      .method-grid, .specs-install-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .phone-frame {
+        width: 304px;
+        height: 615px;
+      }
+
+      .cta-banner {
+        padding: 36px 24px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <img src="icon.png" alt="Logo Bem-estar App" class="logo" />
-      <h1 class="site-title">Bem-estar App</h1>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        <img src="icon.jpg" alt="Ícone Bem-estar App" onerror="this.src='icon.png'" />
+        <div class="brand-text">
+          <span class="brand-title">Bem-estar App</span>
+          <span class="brand-sub" data-i18n="nav_sub">Microlearning & Saúde</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#metodologia" data-i18n="nav_method">Metodologia</a>
+        <a href="#modulos" data-i18n="nav_modules">10 Módulos</a>
+        <a href="#arquitetura" data-i18n="nav_tech">Arquitetura</a>
+        <a href="#instalacao" data-i18n="nav_install">Como Instalar</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" id="siteLangBtn" title="Alternar idioma / Switch language">
+          🌐 <span id="siteLangLabel">PT</span>
+        </button>
+        <a href="https://github.com/ArthurCordeiRagonha/bem-estar-site/releases/download/v1.0/bem-estar-app.apk" class="btn-nav-download" data-i18n="nav_download">
+          Baixar APK
+        </a>
+      </div>
     </div>
   </header>
 
-  <div class="main-wrapper">
-
-    <aside class="sidebar">
-      <h2>Sobre o App:</h2>
-      <p>
-        O <strong>Bem-estar App</strong> é uma aplicação mobile de microlearning focada na saúde. 
-        Aprenda de forma rápida e direta através de quizzes gamificados e conteúdos interativos na palma da sua mão.
-      </p>
-      <p>
-        Construído com design responsivo utilizando React Native e Expo, operando de forma independente e offline.
-      </p>
-
-      <h3>Especificações Técnicas:</h3>
-      <ul class="contatos">
-        <li><strong>Arquitetura:</strong> 10 Módulos Educativos</li>
-        <li><strong>Idiomas:</strong> Suporte Bilíngue (PT/EN)</li>
-        <li><strong>Armazenamento:</strong> Local (AsyncStorage)</li>
-      </ul>
-    </aside>
-
-    <main class="content">
-      <h2 class="titulo-destaque">Baixe o Aplicativo:</h2>
-
-      <article class="card-destino">
-        <div class="imagem-wrap">
-          
-          <img src="bem_estar_image.jpg" alt="Screenshot do Bem-estar App" class="destino-img">
+  <!-- HERO + SIMULADOR REAL DO APP -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span data-i18n="hero_badge">TCC • Análise e Desenvolvimento de Sistemas • v1.0.0</span>
         </div>
 
-        <div class="destino-info">
-          <h3>Bem-estar App – Microlearning e Saúde no seu Android</h3>
-          <p>
-            Tenha acesso instantâneo a testes de conhecimentos, dicas e guias de saúde. 
-            A interface possui um design limpo, flat e isométrico para facilitar a sua leitura. O aplicativo funciona 100% offline, garantindo que o seu progresso fique salvo diretamente na memória do aparelho.
-          </p>
-          <p>
-            <em>Para instalar, lembre-se de permitir a instalação de apps de "Fontes Desconhecidas" nas configurações do seu Android.</em>
-          </p>
-          <p class="preco">Versão: <strong>1.0.0</strong></p>
-          
-          <a href="https://github.com/ArthurCordeiRagonha/bem-estar-site/releases/download/v1.0/bem-estar-app.apk" style="text-decoration: none;">
-          <button class="btn-comprar">Baixar APK Android</button>
+        <h1 data-i18n="hero_title">
+          Saúde e qualidade de vida em <span>micro-lições</span> na palma da sua mão.
+        </h1>
+
+        <p class="hero-desc" data-i18n="hero_desc">
+          O <strong>Bem-estar App</strong> transforma ciência da saúde, sono, nutrição, meditação e esportes em 200 cards ilustrados e quizzes gamificados. Desenvolvido em React Native e Expo para funcionar <strong>100% offline</strong> e em dois idiomas (PT/EN).
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="https://github.com/ArthurCordeiRagonha/bem-estar-site/releases/download/v1.0/bem-estar-app.apk" class="btn-primary-hero">
+            <span style="font-size: 1.5rem;">📲</span>
+            <div>
+              <span data-i18n="hero_cta_main">Baixar APK Android</span>
+              <small data-i18n="hero_cta_sub">Versão 1.0.0 • Instalação Direta Oficial</small>
+            </div>
+          </a>
+
+          <a href="#modulos" class="btn-secondary-hero" data-i18n="hero_cta_sec">
+            Explorar os 10 Módulos ↓
           </a>
         </div>
-      </article>
 
-    </main>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <strong>10</strong>
+            <span data-i18n="stat_1">Módulos Temáticos</span>
+          </div>
+          <div class="stat-box">
+            <strong>200</strong>
+            <span data-i18n="stat_2">Lições Ilustradas</span>
+          </div>
+          <div class="stat-box">
+            <strong>100</strong>
+            <span data-i18n="stat_3">Questões de Quiz</span>
+          </div>
+          <div class="stat-box">
+            <strong>100%</strong>
+            <span data-i18n="stat_4">Offline & Gratuito</span>
+          </div>
+        </div>
+      </div>
 
-    <div class="clearfix"></div>
-  </div>
+      <!-- SIMULADOR INTERATIVO DO SMARTPHONE -->
+      <div class="phone-showcase">
+        <div class="phone-tabs">
+          <button class="phone-tab-btn active" data-screen="screen-home">Início</button>
+          <button class="phone-tab-btn" data-screen="screen-lesson">Lições</button>
+          <button class="phone-tab-btn" data-screen="screen-quiz">Quiz</button>
+          <button class="phone-tab-btn" data-screen="screen-splash">Splash / Vídeo</button>
+        </div>
 
-  <footer class="site-footer">
-    <p>Desenvolvimento: Arthur Cordeiro Ragonha & Francisco Santana Gonçalves</p>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar">
+              <span>18:53</span>
+              <span>4G • 100%</span>
+            </div>
+
+            <!-- TELA 1: HOME REAL DO APP -->
+            <div class="screen-view active" id="screen-home">
+              <div class="app-top-bar">
+                <span style="width:24px;"></span>
+                <img src="icon.jpg" alt="Logo" onerror="this.src='icon.png'" />
+                <span style="font-size:1.1rem; color: var(--teal-primary);" title="PT / EN">🌐</span>
+              </div>
+              <div class="app-home-body">
+                <div class="app-search-box">🔍 Pesquisar especialidade...</div>
+                <div class="app-cat-pill">BEM-ESTAR GERAL</div>
+                <div class="app-module-circles">
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-lesson')">
+                    <div class="app-circle-avatar">😴</div>
+                    <span class="app-circle-label">Sono ✓</span>
+                  </div>
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-lesson')">
+                    <div class="app-circle-avatar">🥗</div>
+                    <span class="app-circle-label">Alimentação</span>
+                  </div>
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-lesson')">
+                    <div class="app-circle-avatar">🧘</div>
+                    <span class="app-circle-label">Meditação ✓</span>
+                  </div>
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-quiz')">
+                    <div class="app-circle-avatar">💊</div>
+                    <span class="app-circle-label">Vitaminas</span>
+                  </div>
+                </div>
+                <div class="app-cat-pill">ESPORTES & PREVENÇÃO</div>
+                <div class="app-module-circles">
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-lesson')">
+                    <div class="app-circle-avatar">🚴</div>
+                    <span class="app-circle-label">Ciclismo</span>
+                  </div>
+                  <div class="app-circle-item" onclick="switchPhoneTab('screen-lesson')">
+                    <div class="app-circle-avatar">🏊</div>
+                    <span class="app-circle-label">Natação</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TELA 2: LIÇÕES ILUSTRADAS INTERATIVAS -->
+            <div class="screen-view lesson-screen" id="screen-lesson">
+              <div>
+                <div class="lesson-dots" id="lessonDots"></div>
+                <div class="lesson-card-box">
+                  <div class="lesson-art" id="lessonArt">
+                    <span class="tag" id="lessonTag">Sono • 1/4</span>
+                    <span id="lessonEmoji">🧠</span>
+                  </div>
+                  <h4 id="lessonTitle">1. Importância do Sono</h4>
+                  <p id="lessonText">Dormir não é perda de tempo: é durante o sono profundo que o corpo repara tecidos e consolida a memória.</p>
+                </div>
+              </div>
+
+              <div class="lesson-nav-btns">
+                <button class="btn-lesson prev" onclick="changeLesson(-1)">← Anterior</button>
+                <button class="btn-lesson next" onclick="changeLesson(1)">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- TELA 3: QUIZ GAMIFICADO INTERATIVO -->
+            <div class="screen-view quiz-screen" id="screen-quiz">
+              <div>
+                <div class="quiz-progress-bar">
+                  <div class="quiz-progress-fill" id="quizFill"></div>
+                </div>
+                <div class="quiz-q-tag" id="quizStep">QUESTÃO 1 DE 3 • SONO</div>
+                <div class="quiz-question" id="quizQuestion">O que o álcool faz com a qualidade do seu sono?</div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+              </div>
+
+              <button class="btn-lesson next" style="width:100%;" onclick="nextQuiz()">Próxima Questão →</button>
+            </div>
+
+            <!-- TELA 4: SPLASH SCREEN OFICIAL / VÍDEO DEMO -->
+            <div class="screen-view media-screen" id="screen-splash">
+              <video id="demoVideo" controls playsinline poster="splash-icon.jpg" style="display:none;">
+                <source src="demo.mp4" type="video/mp4" />
+              </video>
+              <img id="splashFallback" src="splash-icon.jpg" alt="Splash Screen Oficial Bem-estar App" onerror="this.src='icon.jpg'" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METODOLOGIA -->
+  <section class="section section-alt" id="metodologia">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow" data-i18n="method_eyebrow">Aprendizado Baseado em Evidências</span>
+        <h2 data-i18n="method_title">Como funciona o Microlearning do App</h2>
+        <p data-i18n="method_desc">Projetado para substituir leituras longas e cansativas por pílulas visuais de conhecimento seguidas de fixação ativa.</p>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🎨</div>
+          <h3 data-i18n="m1_title">20 Lições de Ouro por Módulo</h3>
+          <p data-i18n="m1_desc">Cada especialidade é dividida em 20 cards deslizáveis com ilustrações flat/isométricas limpas, sem poluição visual e com linguagem direta.</p>
+        </div>
+
+        <div class="method-card">
+          <div class="method-icon">🏆</div>
+          <h3 data-i18n="m2_title">Quizzes com Correção Imediata</h3>
+          <p data-i18n="m2_desc">Ao concluir as 20 lições, você desbloqueia um desafio de 10 perguntas (múltipla escolha e preenchimento de palavras-chave) com feedback instantâneo.</p>
+        </div>
+
+        <div class="method-card">
+          <div class="method-icon">📴</div>
+          <h3 data-i18n="m3_title">100% Offline e Bilíngue</h3>
+          <p data-i18n="m3_desc">Funciona sem internet em qualquer lugar. Seu progresso, selos de conclusão e preferência de idioma (Português ou Inglês) ficam salvos localmente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORADOR DOS 10 MÓDULOS -->
+  <section class="section" id="modulos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow" data-i18n="mod_eyebrow">Conteúdo Completo</span>
+        <h2 data-i18n="mod_title">10 Módulos Educativos Integrados</h2>
+        <p data-i18n="mod_desc">Filtre por área de interesse ou pesquise um tema específico presente dentro do aplicativo.</p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">Todos (10)</button>
+          <button class="filter-pill" data-filter="wellness">Bem-Estar Geral</button>
+          <button class="filter-pill" data-filter="prevention">Prevenção & Saúde</button>
+          <button class="filter-pill" data-filter="sports">Atividade Física</button>
+        </div>
+
+        <input type="search" id="moduleSearch" class="module-search" placeholder="Buscar módulo (ex: Sono, Corrida...)" />
+      </div>
+
+      <div class="modules-grid" id="modulesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ESPECIFICAÇÕES TÉCNICAS & INSTALAÇÃO -->
+  <section class="section section-alt" id="arquitetura">
+    <div class="container">
+      <div class="specs-install-grid">
+        <div class="panel-box">
+          <h3>Ficha Técnica & Engenharia</h3>
+          <ul class="spec-list">
+            <li><span>Framework Mobile</span> <strong>React Native + Expo SDK</strong></li>
+            <li><span>Arquitetura de Conteúdo</span> <strong>10 Módulos • 200 Lições</strong></li>
+            <li><span>Sistema de Avaliação</span> <strong>100 Questões Gamificadas</strong></li>
+            <li><span>Persistência de Dados</span> <strong>Local (AsyncStorage)</strong></li>
+            <li><span>Internacionalização</span> <strong>Bilíngue Nativo (PT-BR / EN)</strong></li>
+            <li><span>Privacidade & LGPD</span> <strong>Zero coleta de dados externos</strong></li>
+            <li><span>Plataforma Alvo</span> <strong>Android (APK v1.0.0)</strong></li>
+          </ul>
+        </div>
+
+        <div class="panel-box" id="instalacao">
+          <h3>Como Instalar no Android</h3>
+          <div class="install-steps">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div>
+                <h4>Baixe o pacote oficial (.apk)</h4>
+                <p>Toque no botão <strong>Baixar APK Android</strong> nesta página para transferir o instalador hospedado no GitHub Releases.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div>
+                <h4>Permita a instalação pelo navegador</h4>
+                <p>Ao abrir o arquivo baixado, toque em <strong>Configurações</strong> e ative a chave <em>"Permitir desta fonte"</em> para autorizar apps fora da Play Store.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div>
+                <h4>Escolha seu idioma e comece</h4>
+                <p>Abra o <strong>Bem-estar App</strong>, selecione Português ou English na tela inicial e estude mesmo em modo avião.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA FINAL -->
+      <div class="cta-banner" style="margin-top: 48px;">
+        <div class="cta-banner-text">
+          <h2>Pronto para testar o Bem-estar App?</h2>
+          <p>Instale gratuitamente no seu smartphone Android e explore todas as 200 lições ilustradas e desafios interativos.</p>
+        </div>
+        <a href="https://github.com/ArthurCordeiRagonha/bem-estar-site/releases/download/v1.0/bem-estar-app.apk" class="btn-cta-white">
+          📲 Baixar APK Agora (v1.0.0)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="icon.jpg" alt="Logo" onerror="this.src='icon.png'" />
+        <div>
+          <strong>Bem-estar App</strong>
+          <div style="font-size: 0.78rem; opacity: 0.78;">Trabalho de Conclusão de Curso • Análise e Desenvolvimento de Sistemas</div>
+        </div>
+      </div>
+
+      <div class="footer-credits">
+        Desenvolvimento: <strong>Arthur Cordeiro Ragonha</strong> & <strong>Francisco Santana Gonçalves</strong>
+      </div>
+    </div>
   </footer>
 
+  <script>
+    /* ================= DADOS DOS 10 MÓDULOS REAIS ================= */
+    const modulesData = [
+      {
+        emoji: "😴",
+        cat: "wellness",
+        catLabel: "Bem-Estar Geral",
+        title: "Sono (Sleep)",
+        desc: "Ciclo circadiano, produção de melatonina, temperatura ideal do quarto (18–21°C), jetlag social e luz solar matinal."
+      },
+      {
+        emoji: "🥗",
+        cat: "wellness",
+        catLabel: "Bem-Estar Geral",
+        title: "Alimentação (Nutrition)",
+        desc: "Equilíbrio de macronutrientes, densidade nutricional, hidratação diária e construção de hábitos alimentares reais."
+      },
+      {
+        emoji: "🧘",
+        cat: "wellness",
+        catLabel: "Bem-Estar Geral",
+        title: "Meditação (Meditation)",
+        desc: "Postura correta, atenção plena sem julgamentos, controle da ansiedade e consistência mental diária."
+      },
+      {
+        emoji: "💊",
+        cat: "wellness",
+        catLabel: "Bem-Estar Geral",
+        title: "Vitaminas & Micronutrientes",
+        desc: "Funções das vitaminas A, complexo B, C, D e E, biodisponibilidade e prevenção de deficiências nutricionais."
+      },
+      {
+        emoji: "🌿",
+        cat: "prevention",
+        catLabel: "Prevenção & Saúde",
+        title: "Longevidade (Longevity)",
+        desc: "Pilares científicos do envelhecimento saudável, proteção celular, qualidade metabólica e hábitos preventivos."
+      },
+      {
+        emoji: "💇",
+        cat: "prevention",
+        catLabel: "Prevenção & Saúde",
+        title: "Queda Capilar (Hair Loss)",
+        desc: "Alopecia androgenética, impacto do cortisol (eflúvio telógeno), papel da biotina e importância do tratamento precoce."
+      },
+      {
+        emoji: "❤️",
+        cat: "prevention",
+        catLabel: "Prevenção & Saúde",
+        title: "Saúde Cardiovascular",
+        desc: "Circulação sanguínea, prevenção de fatores de risco, saúde endotelial e fortalecimento do sistema cardíaco."
+      },
+      {
+        emoji: "🚴",
+        cat: "sports",
+        catLabel: "Atividade Física",
+        title: "Ciclismo (Cycling)",
+        desc: "Ajuste ergonômico, cadência de pedalada, resistência aeróbica e segurança ativa no trânsito."
+      },
+      {
+        emoji: "🏃",
+        cat: "sports",
+        catLabel: "Atividade Física",
+        title: "Corrida (Running)",
+        desc: "Mecânica da passada, progressão segura de volume, prevenção de lesões articulares e ritmo cardíaco."
+      },
+      {
+        emoji: "🏊",
+        cat: "sports",
+        catLabel: "Atividade Física",
+        title: "Natação (Swimming)",
+        desc: "Coordenação respiratória, condicionamento cardiorrespiratório completo e exercício de baixo impacto articular."
+      }
+    ];
+
+    const modulesGrid = document.getElementById("modulesGrid");
+    const filterPills = document.querySelectorAll(".filter-pill");
+    const moduleSearch = document.getElementById("moduleSearch");
+    let currentFilter = "all";
+
+    function renderModules() {
+      const term = moduleSearch.value.toLowerCase().trim();
+      modulesGrid.innerHTML = "";
+
+      const filtered = modulesData.filter(m => {
+        const matchesCat = currentFilter === "all" || m.cat === currentFilter;
+        const matchesSearch = m.title.toLowerCase().includes(term) || m.desc.toLowerCase().includes(term);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        modulesGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 24px;">Nenhum módulo encontrado para "${moduleSearch.value}".</p>`;
+        return;
+      }
+
+      filtered.forEach(m => {
+        const card = document.createElement("article");
+        card.className = "module-card";
+        card.innerHTML = `
+          <div>
+            <div class="module-card-top">
+              <div class="module-emoji">${m.emoji}</div>
+              <span class="module-cat-tag">${m.catLabel}</span>
+            </div>
+            <h3>${m.title}</h3>
+            <p>${m.desc}</p>
+          </div>
+          <div class="module-meta">
+            <span>📖 20 Lições</span>
+            <span>🎯 10 Questões</span>
+          </div>
+        `;
+        modulesGrid.appendChild(card);
+      });
+    }
+
+    filterPills.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterPills.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderModules();
+      });
+    });
+
+    moduleSearch.addEventListener("input", renderModules);
+    renderModules();
+
+    /* ================= SIMULADOR INTERATIVO DO SMARTPHONE ================= */
+    const phoneTabBtns = document.querySelectorAll(".phone-tab-btn");
+    const screenViews = document.querySelectorAll(".screen-view");
+
+    function switchPhoneTab(screenId) {
+      phoneTabBtns.forEach(b => b.classList.toggle("active", b.dataset.screen === screenId));
+      screenViews.forEach(v => v.classList.toggle("active", v.id === screenId));
+    }
+
+    phoneTabBtns.forEach(btn => {
+      btn.addEventListener("click", () => switchPhoneTab(btn.dataset.screen));
+    });
+
+    // Verifica se demo.mp4 existe na pasta para alternar com a Splash Screen
+    const demoVideo = document.getElementById("demoVideo");
+    const splashFallback = document.getElementById("splashFallback");
+    demoVideo.addEventListener("loadeddata", () => {
+      demoVideo.style.display = "block";
+      splashFallback.style.display = "none";
+    });
+
+    // Lições reais extraídas do vídeo do App
+    const sampleLessons = [
+      {
+        tag: "Sono • 1/4",
+        emoji: "🧠",
+        bg: "linear-gradient(145deg, #16324A, #275373)",
+        title: "1. Importância do Sono",
+        text: "Dormir não é perda de tempo: o corpo se reconstrói e consolida a memória durante o sono profundo."
+      },
+      {
+        tag: "Sono • 2/4",
+        emoji: "❄️",
+        bg: "linear-gradient(145deg, #1D4E5F, #2E7D6B)",
+        title: "5. Temperatura do Quarto",
+        text: "Um ambiente levemente frio (entre 18°C e 21°C) é ideal para induzir e manter o sono reparador."
+      },
+      {
+        tag: "Meditação • 3/4",
+        emoji: "🧘",
+        bg: "linear-gradient(145deg, #2E6F40, #4C9A5E)",
+        title: "10. Sem Julgamentos",
+        text: "Não julgue sua sessão como 'boa' ou 'ruim'. Apenas observe sua respiração e retorne ao foco."
+      },
+      {
+        tag: "Queda Capilar • 4/4",
+        emoji: "🌱",
+        bg: "linear-gradient(145deg, #0E5A73, #2B8A9E)",
+        title: "20. Comece Cedo",
+        text: "A regra de ouro: é muito mais fácil preservar o folículo capilar ativo do que recuperá-lo tarde demais."
+      }
+    ];
+
+    let lessonIdx = 0;
+
+    function renderLesson() {
+      const item = sampleLessons[lessonIdx];
+      document.getElementById("lessonTag").textContent = item.tag;
+      document.getElementById("lessonEmoji").textContent = item.emoji;
+      document.getElementById("lessonArt").style.background = item.bg;
+      document.getElementById("lessonTitle").textContent = item.title;
+      document.getElementById("lessonText").textContent = item.text;
+
+      const dotsContainer = document.getElementById("lessonDots");
+      dotsContainer.innerHTML = sampleLessons.map((_, i) =>
+        `<span class="lesson-dot ${i === lessonIdx ? 'active' : ''}"></span>`
+      ).join("");
+    }
+
+    function changeLesson(dir) {
+      lessonIdx = (lessonIdx + dir + sampleLessons.length) % sampleLessons.length;
+      renderLesson();
+    }
+
+    renderLesson();
+
+    // Quiz real extraído do vídeo do App
+    const sampleQuizzes = [
+      {
+        step: "QUESTÃO 1 DE 3 • SONO",
+        question: "O que o álcool faz com a arquitetura do seu sono?",
+        options: [
+          { text: "Melhora o descanso profundo.", correct: false },
+          { text: "Destrói a fase REM e impede o sono reparador.", correct: true },
+          { text: "Não causa nenhum efeito.", correct: false }
+        ]
+      },
+      {
+        step: "QUESTÃO 2 DE 3 • HIGIENE DO SONO",
+        question: "Se passarem 20 minutos sem conseguir dormir, o que fazer?",
+        options: [
+          { text: "Levantar, ler sob luz baixa e voltar com sono.", correct: true },
+          { text: "Pegar o celular na cama.", correct: false },
+          { text: "Ficar forçando os olhos fechados.", correct: false }
+        ]
+      },
+      {
+        step: "QUESTÃO 3 DE 3 • LUZ E RITMO",
+        question: "Qual luz das telas de celulares engana o cérebro à noite?",
+        options: [
+          { text: "Luz infravermelha", correct: false },
+          { text: "Luz azul (Blue light)", correct: true },
+          { text: "Luz âmbar", correct: false }
+        ]
+      }
+    ];
+
+    let quizIdx = 0;
+
+    function renderQuiz() {
+      const q = sampleQuizzes[quizIdx];
+      document.getElementById("quizStep").textContent = q.step;
+      document.getElementById("quizQuestion").textContent = q.question;
+      document.getElementById("quizFeedback").textContent = "";
+      document.getElementById("quizFill").style.width = `${((quizIdx + 1) / sampleQuizzes.length) * 100}%`;
+
+      const optsBox = document.getElementById("quizOptions");
+      optsBox.innerHTML = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-opt";
+        btn.textContent = opt.text;
+        btn.onclick = () => {
+          document.querySelectorAll(".quiz-opt").forEach(b => b.disabled = true);
+          if (opt.correct) {
+            btn.classList.add("correct");
+            btn.textContent += " ✓";
+            document.getElementById("quizFeedback").style.color = "var(--green-primary)";
+            document.getElementById("quizFeedback").textContent = "Correto! Excelente fixação.";
+          } else {
+            btn.classList.add("wrong");
+            btn.textContent += " ✕";
+            document.getElementById("quizFeedback").style.color = "#C62828";
+            document.getElementById("quizFeedback").textContent = "Incorreto — tente a próxima!";
+          }
+        };
+        optsBox.appendChild(btn);
+      });
+    }
+
+    function nextQuiz() {
+      quizIdx = (quizIdx + 1) % sampleQuizzes.length;
+      renderQuiz();
+    }
+
+    renderQuiz();
+
+    /* ================= TRADUÇÃO BILÍNGUE DA LANDING PAGE (PT / EN) ================= */
+    const translations = {
+      pt: {
+        nav_sub: "Microlearning & Saúde",
+        nav_method: "Metodologia",
+        nav_modules: "10 Módulos",
+        nav_tech: "Arquitetura",
+        nav_install: "Como Instalar",
+        nav_download: "Baixar APK",
+        hero_badge: "TCC • Análise e Desenvolvimento de Sistemas • v1.0.0",
+        hero_title: 'Saúde e qualidade de vida em <span>micro-lições</span> na palma da sua mão.',
+        hero_desc: 'O <strong>Bem-estar App</strong> transforma ciência da saúde, sono, nutrição, meditação e esportes em 200 cards ilustrados e quizzes gamificados. Desenvolvido em React Native e Expo para funcionar <strong>100% offline</strong> e em dois idiomas (PT/EN).',
+        hero_cta_main: "Baixar APK Android",
+        hero_cta_sub: "Versão 1.0.0 • Instalação Direta Oficial",
+        hero_cta_sec: "Explorar os 10 Módulos ↓",
+        stat_1: "Módulos Temáticos",
+        stat_2: "Lições Ilustradas",
+        stat_3: "Questões de Quiz",
+        stat_4: "Offline & Gratuito",
+        method_eyebrow: "Aprendizado Baseado em Evidências",
+        method_title: "Como funciona o Microlearning do App",
+        method_desc: "Projetado para substituir leituras longas e cansativas por pílulas visuais de conhecimento seguidas de fixação ativa.",
+        m1_title: "20 Lições de Ouro por Módulo",
+        m1_desc: "Cada especialidade é dividida em 20 cards deslizáveis com ilustrações flat/isométricas limpas, sem poluição visual e com linguagem direta.",
+        m2_title: "Quizzes com Correção Imediata",
+        m2_desc: "Ao concluir as 20 lições, você desbloqueia um desafio de 10 perguntas (múltipla escolha e preenchimento de palavras-chave) com feedback instantâneo.",
+        m3_title: "100% Offline e Bilíngue",
+        m3_desc: "Funciona sem internet em qualquer lugar. Seu progresso, selos de conclusão e preferência de idioma (Português ou Inglês) ficam salvos localmente.",
+        mod_eyebrow: "Conteúdo Completo",
+        mod_title: "10 Módulos Educativos Integrados",
+        mod_desc: "Filtre por área de interesse ou pesquise um tema específico presente dentro do aplicativo."
+      },
+      en: {
+        nav_sub: "Microlearning & Health",
+        nav_method: "Methodology",
+        nav_modules: "10 Modules",
+        nav_tech: "Architecture",
+        nav_install: "How to Install",
+        nav_download: "Download APK",
+        hero_badge: "Capstone Project • Systems Analysis & Development • v1.0.0",
+        hero_title: 'Health and well-being in <span>micro-lessons</span> right in your pocket.',
+        hero_desc: '<strong>Bem-estar App</strong> turns health science, sleep, nutrition, meditation, and sports into 200 illustrated cards and gamified quizzes. Built with React Native & Expo to run <strong>100% offline</strong> in Portuguese and English.',
+        hero_cta_main: "Download Android APK",
+        hero_cta_sub: "Version 1.0.0 • Official Direct Release",
+        hero_cta_sec: "Explore all 10 Modules ↓",
+        stat_1: "Thematic Modules",
+        stat_2: "Illustrated Lessons",
+        stat_3: "Quiz Questions",
+        stat_4: "Offline & Free",
+        method_eyebrow: "Evidence-Based Learning",
+        method_title: "How the App's Microlearning Works",
+        method_desc: "Designed to replace long, exhausting articles with visual bite-sized knowledge pills followed by active recall.",
+        m1_title: "20 Golden Lessons per Module",
+        m1_desc: "Each specialty is structured into 20 swipeable cards featuring clean flat/isometric illustrations and concise, objective explanations.",
+        m2_title: "Instant-Feedback Quizzes",
+        m2_desc: "After finishing all 20 lessons, unlock a 10-question challenge (multiple-choice and fill-in-the-blank) with immediate visual correction.",
+        m3_title: "100% Offline & Bilingual",
+        m3_desc: "Works anywhere without an internet connection. Your progress, completion badges, and language preference (PT/EN) are stored locally.",
+        mod_eyebrow: "Full Curriculum",
+        mod_title: "10 Integrated Educational Modules",
+        mod_desc: "Filter by wellness category or search for a specific health topic inside the app."
+      }
+    };
+
+    let currentSiteLang = "pt";
+    const siteLangBtn = document.getElementById("siteLangBtn");
+    const siteLangLabel = document.getElementById("siteLangLabel");
+
+    siteLangBtn.addEventListener("click", () => {
+      currentSiteLang = currentSiteLang === "pt" ? "en" : "pt";
+      siteLangLabel.textContent = currentSiteLang.toUpperCase();
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[currentSiteLang][key]) {
+          el.innerHTML = translations[currentSiteLang][key];
+        }
+      });
+    });
+  </script>
 </body>
 </html>
